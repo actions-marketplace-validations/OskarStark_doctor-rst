@@ -37,6 +37,7 @@
 * [extension_xlf_instead_of_xliff](#extension_xlf_instead_of_xliff)
 * [filename_uses_dashes_only](#filename_uses_dashes_only)
 * [filename_uses_underscores_only](#filename_uses_underscores_only)
+* [filepath_and_namespace_should_match](#filepath_and_namespace_should_match)
 * [final_admin_classes](#final_admin_classes)
 * [final_admin_extension_classes](#final_admin_extension_classes)
 * [forbidden_directives](#forbidden_directives)
@@ -64,12 +65,14 @@
 * [no_contraction](#no_contraction)
 * [no_directive_after_shorthand](#no_directive_after_shorthand)
 * [no_duplicate_use_statements](#no_duplicate_use_statements)
+* [no_empty_directive](#no_empty_directive)
 * [no_empty_literals](#no_empty_literals)
 * [no_explicit_use_of_code_block_php](#no_explicit_use_of_code_block_php)
 * [no_footnotes](#no_footnotes)
 * [no_inheritdoc_in_code_examples](#no_inheritdoc_in_code_examples)
 * [no_merge_conflict](#no_merge_conflict)
 * [no_namespace_after_use_statements](#no_namespace_after_use_statements)
+* [no_non_breaking_space](#no_non_breaking_space)
 * [no_php_open_tag_in_code_block_php_directive](#no_php_open_tag_in_code_block_php_directive)
 * [no_php_prefix_before_bin_console](#no_php_prefix_before_bin_console)
 * [no_php_prefix_before_composer](#no_php_prefix_before_composer)
@@ -757,6 +760,43 @@ custom-extensions.rst
 - Rule class: [App\Rule\FilenameUsesUnderscoresOnly](https://github.com/OskarStark/doctor-rst/blob/develop/src/Rule/FilenameUsesUnderscoresOnly.php)
 - Test class: [App\Tests\Rule\FilenameUsesUnderscoresOnlyTest](https://github.com/OskarStark/doctor-rst/blob/develop/tests/Rule/FilenameUsesUnderscoresOnlyTest.php)
 
+## `filepath_and_namespace_should_match`
+
+  > _Ensures the namespace in a PHP code block matches the filepath._
+
+#### Groups [`@Sonata`, `@Symfony`]
+
+#### Configuration options
+
+Name | Required
+--- | ---
+`namespace_mapping` | `true` | `array`
+`ignored_paths` | `false` | `array`
+`ignored_namespaces` | `false` | `array`
+
+##### Valid Examples :+1:
+
+```rst
+.. code-block:: php
+
+    // src/Acme/FooBundle/Entity/User.php
+    namespace Acme\FooBundle\Entity;
+```
+
+##### Invalid Examples :-1:
+
+```rst
+.. code-block:: php
+
+    // src/Acme/FooBundle/Entity/User.php
+    namespace Acme\WrongBundle\Entity;
+```
+
+#### References
+
+- Rule class: [App\Rule\FilepathAndNamespaceShouldMatch](https://github.com/OskarStark/doctor-rst/blob/develop/src/Rule/FilepathAndNamespaceShouldMatch.php)
+- Test class: [App\Tests\Rule\FilepathAndNamespaceShouldMatchTest](https://github.com/OskarStark/doctor-rst/blob/develop/tests/Rule/FilepathAndNamespaceShouldMatchTest.php)
+
 ## `final_admin_classes`
 
 #### Groups [`@Sonata`]
@@ -1121,6 +1161,33 @@ It's an example
 - Rule class: [App\Rule\NoDuplicateUseStatements](https://github.com/OskarStark/doctor-rst/blob/develop/src/Rule/NoDuplicateUseStatements.php)
 - Test class: [App\Tests\Rule\NoDuplicateUseStatementsTest](https://github.com/OskarStark/doctor-rst/blob/develop/tests/Rule/NoDuplicateUseStatementsTest.php)
 
+## `no_empty_directive`
+
+  > _Ensure a directive is not empty._
+
+#### Groups [`@Sonata`, `@Symfony`]
+
+##### Valid Examples :+1:
+
+```rst
+.. note::
+
+    This is a note.
+```
+
+##### Invalid Examples :-1:
+
+```rst
+.. note::
+
+This is a note.
+```
+
+#### References
+
+- Rule class: [App\Rule\NoEmptyDirective](https://github.com/OskarStark/doctor-rst/blob/develop/src/Rule/NoEmptyDirective.php)
+- Test class: [App\Tests\Rule\NoEmptyDirectiveTest](https://github.com/OskarStark/doctor-rst/blob/develop/tests/Rule/NoEmptyDirectiveTest.php)
+
 ## `no_empty_literals`
 
   > _Make sure that no empty literals are used._
@@ -1198,6 +1265,29 @@ Please use ````...
 
 - Rule class: [App\Rule\NoNamespaceAfterUseStatements](https://github.com/OskarStark/doctor-rst/blob/develop/src/Rule/NoNamespaceAfterUseStatements.php)
 - Test class: [App\Tests\Rule\NoNamespaceAfterUseStatementsTest](https://github.com/OskarStark/doctor-rst/blob/develop/tests/Rule/NoNamespaceAfterUseStatementsTest.php)
+
+## `no_non_breaking_space`
+
+  > _Ensure no non-breaking spaces or other invisible whitespace characters are used._
+
+#### Groups [`@Symfony`]
+
+##### Valid Examples :+1:
+
+```rst
+Valid sentence
+```
+
+##### Invalid Examples :-1:
+
+```rst
+Invalid sentence
+```
+
+#### References
+
+- Rule class: [App\Rule\NoNonBreakingSpace](https://github.com/OskarStark/doctor-rst/blob/develop/src/Rule/NoNonBreakingSpace.php)
+- Test class: [App\Tests\Rule\NoNonBreakingSpaceTest](https://github.com/OskarStark/doctor-rst/blob/develop/tests/Rule/NoNonBreakingSpaceTest.php)
 
 ## `no_php_open_tag_in_code_block_php_directive`
 
